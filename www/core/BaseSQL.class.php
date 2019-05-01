@@ -1,5 +1,8 @@
 <?php
 
+namespace Core;
+use \PDO;
+
 class BaseSQL
 {
     private $pdo;
@@ -17,7 +20,7 @@ class BaseSQL
         $this->table = get_called_class();
     }
 
-    public function setId($id)
+    public function setId( int $id):void
     {
         $this->id = $id;
         $this->getOneBy(['id' => $id], true);
@@ -29,7 +32,7 @@ class BaseSQL
      *
      * @return mixed
      */
-    public function getOneBy(array $where, $object = false)
+    public function getOneBy(array $where, bool $object = false):object
     {
         $sqlWhere = [];
         foreach ($where as $key => $value) {
@@ -49,7 +52,7 @@ class BaseSQL
         return $query->fetch();
     }
 
-    public function save()
+    public function save():void
     {
         $dataObject = get_object_vars($this);
         $dataChild = array_diff_key($dataObject, get_class_vars(get_class()));

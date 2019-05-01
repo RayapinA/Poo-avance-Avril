@@ -1,8 +1,12 @@
 <?php
 
+namespace Controllers;
+
+use Core\View;
+
 class PagesController
 {
-    public function defaultAction()
+    public function defaultAction():object
     {
         $v = new View('homepage', 'back');
         $v->assign('pseudo', 'prof');

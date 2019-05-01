@@ -1,5 +1,11 @@
 <?php
 
+namespace Controllers;
+
+use Core\View;
+use Core\Validator;
+use Models\Users;
+
 class UsersController
 {
     public function defaultAction()
@@ -7,7 +13,7 @@ class UsersController
         echo 'users default';
     }
 
-    public function addAction()
+    public function addAction():void
     {
         $user = new Users();
         $form = $user->getRegisterForm();
@@ -16,7 +22,7 @@ class UsersController
         $v->assign('form', $form);
     }
 
-    public function saveAction()
+    public function saveAction():void
     {
         $user = new Users();
         $form = $user->getRegisterForm();
@@ -40,7 +46,7 @@ class UsersController
         $v->assign('form', $form);
     }
 
-    public function loginAction()
+    public function loginAction():void
     {
         $user = new Users();
         $form = $user->getLoginForm();
@@ -61,7 +67,7 @@ class UsersController
         $v->assign('form', $form);
     }
 
-    public function forgetPasswordAction()
+    public function forgetPasswordAction(): object
     {
         $v = new View('forgetPasswordUser', 'front');
     }
