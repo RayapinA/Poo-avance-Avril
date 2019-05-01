@@ -6,9 +6,16 @@ use \Controllers\PagesController;
 
 function myAutoloader($class)
 {
-    $className = substr($class, strpos($class,'\\') + 1  );
-    $classPath = 'core/'.$className.'.class.php'; var_dump($classPath);
-    $classModel = 'models/'.$className.'.class.php';var_dump($classModel);
+
+    //var_dump(substr($class, strpos($class,'\\') + 1  ));echo '<br>';
+
+    $className = substr($class, strpos($class,'\\') + 1  );//var_dump($className);echo '<br>';
+    //if($className == "outing"){
+      //  $className = "Routing";
+    //}
+    $classPath = 'core/'.$className.'.php'; //var_dump($classPath);echo '<br> 1';
+    $classModel = 'models/'.$className.'.php';  //var_dump($classModel);echo '<br>2';
+
 
     if (file_exists($classPath)) {
         include $classPath;
@@ -21,7 +28,7 @@ function myAutoloader($class)
 spl_autoload_register('myAutoloader');
 
 // Récupération des paramètres dans l'url - Routing
-$slug = explode('?', $_SERVER['REQUEST_URI'])[0];var_dump($slug);
+$slug = explode('?', $_SERVER['REQUEST_URI'])[0]; //var_dump($slug);echo '<br>';
 $routes = \Core\Routing::getRoute($slug);
 extract($routes);
 

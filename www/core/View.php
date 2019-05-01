@@ -11,7 +11,7 @@ class View
     public function __construct($v, $t = 'back')
     {
         $this->setView($v);
-        $this->setTemplate($t);
+        $this->setTemplate($t);//var_dump($v);
     }
 
     public function setView(string $v):void
@@ -44,8 +44,10 @@ class View
         }
     }
 
-    public function assign(string $key, string $value):void
+    public function assign( $key,  $value)
     {
+        //var_dump($key); echo'<br>';
+        //var_dump($value);echo'<br>';
         $this->data[$key] = $value;
     }
 

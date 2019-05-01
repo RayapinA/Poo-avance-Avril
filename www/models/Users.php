@@ -87,7 +87,7 @@ class Users extends BaseSQL
                 ];
     }
 
-    public function getLoginForm():array
+    public function getLoginForm()
     {
         return [
                     'config' => [
