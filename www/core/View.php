@@ -37,11 +37,12 @@ class View
     public function addModal($modal, $config):void
     {
         $modalPath = 'views/modals/'.$modal.'.mod.php';
-        if (file_exists($modalPath)) {
-            include $modalPath;
-        } else {
+
+        if (!file_exists($modalPath)) {
             die("Attention le fichier modal n'existe pas ".$modalPath);
         }
+
+        include $modalPath;
     }
 
     public function assign( $key,  $value)
