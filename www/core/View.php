@@ -4,34 +4,34 @@ namespace Core;
 
 class View
 {
-    private $v;
-    private $t;
+    private $view;
+    private $template;
     private $data = [];
 
-    public function __construct($v, $t = 'back')
+    public function __construct($view, $template = 'back')
     {
-        $this->setView($v);
-        $this->setTemplate($t);//var_dump($v);
+        $this->setView($view);
+        $this->setTemplate($template);
     }
 
-    public function setView(string $v):void
+    public function setView(string $view):void
     {
-        $viewPath = 'views/'.$v.'.view.php';
-        
+        $viewPath = 'views/'.$view.'.view.php';
+
         if (!file_exists($viewPath)) {
             die("Attention le fichier view n'existe pas ".$viewPath);
         }
-        $this->v = $viewPath;
+        $this->view = $viewPath;
     }
 
-    public function setTemplate(string $t):void
+    public function setTemplate(string $template):void
     {
-        $templatePath = 'views/templates/'.$t.'.tpl.php';
+        $templatePath = 'views/templates/'.$template.'.tpl.php';
 
         if (!file_exists($templatePath)) {
             die("Attention le fichier template n'existe pas ".$templatePath);
         }
-        $this->t = $templatePath;
+        $this->template = $templatePath;
     }
 
     public function addModal($modal, $config):void
@@ -47,14 +47,12 @@ class View
 
     public function assign( $key,  $value)
     {
-        //var_dump($key); echo'<br>';
-        //var_dump($value);echo'<br>';
         $this->data[$key] = $value;
     }
 
     public function __destruct()
     {
         extract($this->data);
-        include $this->t;
+        include $this->template;
     }
 }
