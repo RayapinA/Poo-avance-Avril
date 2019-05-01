@@ -17,21 +17,21 @@ class View
     public function setView(string $v):void
     {
         $viewPath = 'views/'.$v.'.view.php';
-        if (file_exists($viewPath)) {
-            $this->v = $viewPath;
-        } else {
+        
+        if (!file_exists($viewPath)) {
             die("Attention le fichier view n'existe pas ".$viewPath);
         }
+        $this->v = $viewPath;
     }
 
     public function setTemplate(string $t):void
     {
         $templatePath = 'views/templates/'.$t.'.tpl.php';
-        if (file_exists($templatePath)) {
-            $this->t = $templatePath;
-        } else {
+
+        if (!file_exists($templatePath)) {
             die("Attention le fichier template n'existe pas ".$templatePath);
         }
+        $this->t = $templatePath;
     }
 
     public function addModal($modal, $config):void
