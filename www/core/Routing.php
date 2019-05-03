@@ -1,13 +1,14 @@
 <?php
-declare(strict_types=1);
-namespace Core;
 
+declare(strict_types=1);
+
+namespace Core;
 
 class Routing
 {
     public static $routeFile = 'routes.yml';
 
-    public static function getRoute(string $slug):array
+    public static function getRoute(string $slug): array
     {
         //Don't use else Keyword && One level indentation
 
@@ -26,10 +27,9 @@ class Routing
         $controllerPath = 'controllers/'.$controller.'.php';
 
         return ['c' => $controller, 'a' => $action, 'cPath' => $controllerPath];
-
     }
 
-    public static function getSlug(string $controller, string $action):string
+    public static function getSlug(string $controller, string $action): string
     {
         $routes = yaml_parse_file(self::$routeFile);
 

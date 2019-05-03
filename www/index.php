@@ -2,14 +2,11 @@
 
 require 'conf.inc.php';
 
-use \Controllers\PagesController;
-
 function myAutoloader($class)
 {
-
     //var_dump(substr($class, strpos($class,'\\') + 1  ));echo '<br>';
 
-    $className = substr($class, strpos($class,'\\') + 1  );//var_dump($className);echo '<br>';
+    $className = substr($class, strpos($class, '\\') + 1); //var_dump($className);echo '<br>';
 
     $classPath = 'core/'.$className.'.php'; //var_dump($classPath);echo '<br> 1';
     $classModel = 'models/'.$className.'.php'; // var_dump($classModel);echo '<br>2';
@@ -32,7 +29,7 @@ $slug = explode('?', $_SERVER['REQUEST_URI'])[0]; //var_dump($slug);echo '<br>';
 $routes = \Core\Routing::getRoute($slug);
 extract($routes);
 
-$container = [] ;
+$container = [];
 $container['config'] = require 'config/global.php';
 $container += require 'config/di.global.php';
 

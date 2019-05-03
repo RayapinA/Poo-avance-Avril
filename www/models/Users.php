@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Models;
@@ -51,7 +52,7 @@ class Users extends BaseSQL
         $this->status = $status;
     }
 
-    public function getRegisterForm():array
+    public function getRegisterForm(): array
     {
         return [
                     'config' => [
@@ -88,7 +89,7 @@ class Users extends BaseSQL
                 ];
     }
 
-    public function getLoginForm():array
+    public function getLoginForm(): array
     {
         return [
                     'config' => [

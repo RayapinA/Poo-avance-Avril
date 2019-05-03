@@ -14,7 +14,7 @@ class View
         $this->setTemplate($template);
     }
 
-    public function setView(string $view):void
+    public function setView(string $view): void
     {
         $viewPath = 'views/'.$view.'.view.php';
 
@@ -24,7 +24,7 @@ class View
         $this->view = $viewPath;
     }
 
-    public function setTemplate(string $template):void
+    public function setTemplate(string $template): void
     {
         $templatePath = 'views/templates/'.$template.'.tpl.php';
 
@@ -34,7 +34,7 @@ class View
         $this->template = $templatePath;
     }
 
-    public function addModal(string $modal, array $config):void
+    public function addModal(string $modal, array $config): void
     {
         $modalPath = 'views/modals/'.$modal.'.mod.php';
 
@@ -44,10 +44,11 @@ class View
 
         include $modalPath;
     }
+
     /*
         * @return mixed the filtered data, or <b>FALSE</b> if the filter fails.
     */
-    public function assign( string $key,  $value)
+    public function assign(string $key, $value)
     {
         $this->data[$key] = $value;
     }

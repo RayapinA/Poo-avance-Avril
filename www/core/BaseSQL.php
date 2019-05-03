@@ -1,8 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Core;
-use \PDO;
+
+use PDO;
 
 class BaseSQL
 {
@@ -18,8 +20,8 @@ class BaseSQL
             die('Erreur SQL : '.$e->getMessage());
         }
 
-        if(strpos(get_called_class(), "\\")){
-            $classPathArray = explode("\\", get_called_class());
+        if (strpos(get_called_class(), '\\')) {
+            $classPathArray = explode('\\', get_called_class());
         }
         $this->table = end($classPathArray);
     }
@@ -31,11 +33,11 @@ class BaseSQL
     }
 
     /**
-     * @param array $where  the where clause
+     * @param array $where the where clause
      *
      * @return array
      */
-    public function getOneBy(array $where):array
+    public function getOneBy(array $where): array
     {
         $sqlWhere = [];
         foreach ($where as $key => $value) {
@@ -47,14 +49,11 @@ class BaseSQL
         $query->setFetchMode(PDO::FETCH_ASSOC);
         $query->execute($where);
 
-        if($query->fetch()){
+        if ($query->fetch()) {
             return $query->fetch();
         }
 
         return array();
-
-
-
     }
 
     public function save()
