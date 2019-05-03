@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace Core;
 
 
@@ -42,6 +42,6 @@ class Routing
             }
         }
 
-        return null;
+        return 'null';
     }
 }

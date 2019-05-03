@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Core;
 use \PDO;
@@ -23,19 +24,18 @@ class BaseSQL
         $this->table = end($classPathArray);
     }
 
-    public function setId( int $id):void
+    public function setId( int $id)
     {
         $this->id = $id;
-        $this->getOneBy(['id' => $id], true);
+        $this->getOneBy(['id' => $id]);
     }
 
     /**
      * @param array $where  the where clause
-     * @param bool  $object if it will return an array of results ou an object
      *
-     * @return mixed
+     * @return array
      */
-    public function getOneBy(array $where, bool $object = false):object
+    public function getOneBy(array $where):array
     {
         $sqlWhere = [];
         foreach ($where as $key => $value) {
@@ -44,18 +44,20 @@ class BaseSQL
         $sql = ' SELECT * FROM '.$this->table.' WHERE  '.implode(' AND ', $sqlWhere).';';
         $query = $this->pdo->prepare($sql);
 
-        if ($object) {
-            $query->setFetchMode(PDO::FETCH_INTO, $this);
-        } else {
-            $query->setFetchMode(PDO::FETCH_ASSOC);
-        }
-
+        $query->setFetchMode(PDO::FETCH_ASSOC);
         $query->execute($where);
 
-        return $query->fetch();
+        if($query->fetch()){
+            return $query->fetch();
+        }
+
+        return array();
+
+
+
     }
 
-    public function save():void
+    public function save()
     {
         $dataObject = get_object_vars($this);
         $dataChild = array_diff_key($dataObject, get_class_vars(get_class()));
