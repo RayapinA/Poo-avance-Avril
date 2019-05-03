@@ -24,7 +24,7 @@ class BaseSQL
         $this->table = end($classPathArray);
     }
 
-    public function setId( int $id)
+    public function setId(int $id)
     {
         $this->id = $id;
         $this->getOneBy(['id' => $id]);

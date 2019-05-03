@@ -44,7 +44,9 @@ class View
 
         include $modalPath;
     }
-
+    /*
+        * @return mixed the filtered data, or <b>FALSE</b> if the filter fails.
+    */
     public function assign( string $key,  $value)
     {
         $this->data[$key] = $value;

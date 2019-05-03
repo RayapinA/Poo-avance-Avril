@@ -8,7 +8,7 @@ class Validator
 {
     public $errors = [];
 
-    public function __construct($config, $data)
+    public function __construct(array $config,array $data)
     {
         if (count($data) != count($config['data'])) {
             die('Tentative : faille XSS');
@@ -43,27 +43,27 @@ class Validator
         }
     }
 
-    public static function notEmpty($string):bool
+    public static function notEmpty(string $string):bool
     {
         return !empty(trim($string));
     }
 
-    public static function minLength($string, $length):bool
+    public static function minLength(string $string, int $length):bool
     {
         return strlen(trim($string)) >= $length;
     }
 
-    public static function maxLength($string, $length):bool
+    public static function maxLength(string $string, int $length):bool
     {
         return strlen(trim($string)) <= $length;
     }
 
-    public static function checkEmail($string):bool
+    public static function checkEmail(string $string):bool
     {
         return filter_var(trim($string), FILTER_VALIDATE_EMAIL);
     }
 
-    public static function checkPassword($string):bool
+    public static function checkPassword(string $string):bool
     {
         return
                     preg_match('#[a-z]#', $string) &&

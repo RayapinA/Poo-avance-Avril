@@ -36,7 +36,7 @@ class Users extends BaseSQL
         $this->email = strtolower(trim($email));
     }
 
-    public function setPwd( String $pwd)
+    public function setPwd(String $pwd)
     {
         $this->pwd = password_hash($pwd, PASSWORD_DEFAULT);
     }
