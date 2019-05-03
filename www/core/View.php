@@ -8,7 +8,7 @@ class View
     private $template;
     private $data = [];
 
-    public function __construct($view, $template = 'back')
+    public function __construct(string $view, string $template = 'back')
     {
         $this->setView($view);
         $this->setTemplate($template);
@@ -34,7 +34,7 @@ class View
         $this->template = $templatePath;
     }
 
-    public function addModal($modal, $config):void
+    public function addModal(string $modal, array $config):void
     {
         $modalPath = 'views/modals/'.$modal.'.mod.php';
 
@@ -45,7 +45,7 @@ class View
         include $modalPath;
     }
 
-    public function assign( $key,  $value)
+    public function assign( string $key,  $value)
     {
         $this->data[$key] = $value;
     }

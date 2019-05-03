@@ -17,7 +17,10 @@ class BaseSQL
             die('Erreur SQL : '.$e->getMessage());
         }
 
-        $this->table = get_called_class();
+        if(strpos(get_called_class(), "\\")){
+            $classPathArray = explode("\\", get_called_class());
+        }
+        $this->table = end($classPathArray);
     }
 
     public function setId( int $id):void

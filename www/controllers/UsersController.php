@@ -8,7 +8,7 @@ use Models\Users;
 
 class UsersController
 {
-    public function defaultAction()
+    public function defaultAction():void
     {
         echo 'users default';
     }
@@ -18,8 +18,8 @@ class UsersController
         $user = new Users();
         $form = $user->getRegisterForm();
 
-        $v = new View('addUser', 'front');
-        $v->assign('form', $form);
+        $view = new View('addUser', 'front');
+        $view->assign('form', $form);
     }
 
     public function saveAction():void
@@ -42,8 +42,8 @@ class UsersController
             }
         }
 
-        $v = new View('addUser', 'front');
-        $v->assign('form', $form);
+        $view = new View('addUser', 'front');
+        $view->assign('form', $form);
     }
 
     public function loginAction():void
@@ -63,12 +63,12 @@ class UsersController
             }
         }
 
-        $v = new View('loginUser', 'front');
-        $v->assign('form', $form);
+        $view = new View('loginUser', 'front');
+        $view->assign('form', $form);
     }
 
-    public function forgetPasswordAction(): object
+    public function forgetPasswordAction():void
     {
-        $v = new View('forgetPasswordUser', 'front');
+        $view = new View('forgetPasswordUser', 'front');
     }
 }

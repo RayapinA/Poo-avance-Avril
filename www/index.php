@@ -10,12 +10,9 @@ function myAutoloader($class)
     //var_dump(substr($class, strpos($class,'\\') + 1  ));echo '<br>';
 
     $className = substr($class, strpos($class,'\\') + 1  );//var_dump($className);echo '<br>';
-    //if($className == "outing"){
-      //  $className = "Routing";
-    //}
-    $classPath = 'core/'.$className.'.php'; //var_dump($classPath);echo '<br> 1';
-    $classModel = 'models/'.$className.'.php';  //var_dump($classModel);echo '<br>2';
 
+    $classPath = 'core/'.$className.'.php'; //var_dump($classPath);echo '<br> 1';
+    $classModel = 'models/'.$className.'.php'; // var_dump($classModel);echo '<br>2';
 
     if (file_exists($classPath)) {
         include $classPath;
@@ -23,6 +20,9 @@ function myAutoloader($class)
         include $classModel;
     }
 }
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 // La fonction myAutoloader est lancé sur la classe appelée n'est pas trouvée
 spl_autoload_register('myAutoloader');

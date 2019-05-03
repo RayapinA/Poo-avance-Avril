@@ -4,6 +4,7 @@
 namespace Models;
 
 use Core\BaseSQL;
+use Core\Routing;
 
 class Users extends BaseSQL
 {
@@ -87,7 +88,7 @@ class Users extends BaseSQL
                 ];
     }
 
-    public function getLoginForm()
+    public function getLoginForm():array
     {
         return [
                     'config' => [
