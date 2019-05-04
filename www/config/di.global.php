@@ -2,7 +2,9 @@
 
 use Controllers\PagesController;
 use Controllers\UsersController;
+use Controllers\UserPersistenceManager;
 use Models\Users;
+
 
 return [
     Users::class => function ($container) {
@@ -22,4 +24,8 @@ return [
     PagesController::class => function ($container) {
         return new controllers\PagesController();
     },
+    UserPersistenceManager::class => function ($container) {
+        return new controllers\PagesController();
+    },
+
 ];
