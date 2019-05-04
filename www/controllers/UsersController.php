@@ -6,7 +6,6 @@ use Core\View;
 use Core\Validator;
 use Models\Users;
 use Manager\userManager;
-use Controllers\UserPersistenceManager;
 use Form\FormRegister;
 use Form\FormLogin;
 
@@ -45,7 +44,6 @@ class UsersController
         $data = $GLOBALS['_'.$method];
 
         if ($_SERVER['REQUEST_METHOD'] == $method && !empty($data)) {
-
             $validator = new Validator($form, $data);
             $form['errors'] = $validator->errors;
 

@@ -10,8 +10,6 @@ class Validator
 
     public function __construct(array $config, array $data)
     {
-
-
         foreach ($config['data'] as $name => $info) {
             if (!isset($data[$name])) {
                 die('Tentative : faille XSS');
@@ -59,16 +57,15 @@ class Validator
     public static function checkEmail(string $string): string
     {
         //if(is_array(filter_var(trim($string), FILTER_VALIDATE_EMAIL))){
-          //  return filter_var(trim($string), FILTER_VALIDATE_EMAIL) ;
+        //  return filter_var(trim($string), FILTER_VALIDATE_EMAIL) ;
         //}
         //return 'antoine';die();
 
-        return filter_var(trim($string), FILTER_VALIDATE_EMAIL) ;
+        return filter_var(trim($string), FILTER_VALIDATE_EMAIL);
     }
 
     public static function checkPassword(string $string): bool
     {
-
         return
                     preg_match('#[a-z]#', $string) &&
                     preg_match('#[A-Z]#', $string) &&

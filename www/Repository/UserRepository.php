@@ -1,10 +1,9 @@
 <?php
+
 namespace Repository;
 
-use Core\BaseSQL;
 use Core\DataBaseConnectionInterface;
 use Models\Users;
-use Core\DataBaseConnection;
 
 class UserRepository
 {
@@ -15,6 +14,7 @@ class UserRepository
     {
         $this->dataBaseConnection = $dataBaseConnectionInterface->connect();
     }
+
     public function setId(int $id)
     {
         $this->id = $id;
@@ -44,14 +44,13 @@ class UserRepository
     {
         $dataObject = get_object_vars($user);
         if (is_null($dataObject['id'])) {
-            $sql = 'INSERT INTO Users ( ' .
-                implode(',', array_keys($dataObject)) . ') VALUES ( :' .
-                implode(',:', array_keys($dataObject)) . ')';
+            $sql = 'INSERT INTO Users ( '.
+                implode(',', array_keys($dataObject)).') VALUES ( :'.
+                implode(',:', array_keys($dataObject)).')';
 
             $query = $this->dataBaseConnection->prepare($sql);
             $query->execute($dataObject);
-        }
-        else{
+        } else {
             $this->UpdateUser($dataObject);
         }
     }

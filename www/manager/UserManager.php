@@ -4,6 +4,7 @@ namespace Manager;
 
 use Repository\UserRepository;
 use Models\Users;
+
 class UserManager
 {
     private $userRepository;

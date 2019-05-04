@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Models;
 
 use Core\BaseSQL;
-use Core\Routing;
 
 class Users extends BaseSQL
 {
@@ -51,5 +50,4 @@ class Users extends BaseSQL
     {
         $this->status = $status;
     }
-
 }
