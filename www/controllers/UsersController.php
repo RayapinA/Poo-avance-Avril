@@ -9,16 +9,16 @@ use Models\Users;
 use Manager\userManager;
 use Form\FormRegister;
 use Form\FormLogin;
+use Models\EmailValueObject;
 
 class UsersController
 {
     private $userManager;
     private $userAuthentication;
-    private $user;
 
     public function __construct(UserManager $userManager, UserAuthentication $userAuthentication)
     {
-        $this->user = new Users();
+
         $this->userManager = $userManager;
         $this->userAuthentication = $userAuthentication;
     }
@@ -39,7 +39,7 @@ class UsersController
 
     public function saveAction()
     {
-        $user = new Users();
+
         $objectFormLogin = new FormLogin();
         $form = $objectFormLogin->getLoginForm();
 
@@ -51,12 +51,12 @@ class UsersController
             $form['errors'] = $validator->errors;
 
             if (empty($errors)) {
-                $this->user->setFirstname($data['firstname']);
-                $this->user->setLastname($data['lastname']);
-                $this->user->setEmail($data['email']);
-                $this->user->setPwd($data['pwd']);
+                $user = new Users(new EmailValueObject($data['email']));
+                $user->setFirstname($data['firstname']);
+                $user->setLastname($data['lastname']);
+                $user->setPwd($data['pwd']);
 
-                $this->userManager->save($this->user);
+                $this->userManager->save($user);
             }
         }
 

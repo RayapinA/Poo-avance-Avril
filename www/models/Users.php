@@ -3,10 +3,10 @@
 declare(strict_types=1);
 
 namespace Models;
-
+use models\EmailValueObject;
 use Core\BaseSQL;
 
-class Users extends BaseSQL
+class Users
 {
     public $id = null;
     public $firstname;
@@ -16,9 +16,9 @@ class Users extends BaseSQL
     public $role = 1;
     public $status = 0;
 
-    public function __construct()
+    public function __construct(EmailValueObject $email)
     {
-        parent::__construct();
+    $this->email = $email;
     }
 
     public function setFirstname(String $firstname)
@@ -29,11 +29,6 @@ class Users extends BaseSQL
     public function setLastname(String $lastname)
     {
         $this->lastname = strtoupper(trim($lastname));
-    }
-
-    public function setEmail(String $email)
-    {
-        $this->email = strtolower(trim($email));
     }
 
     public function setPwd(String $pwd)

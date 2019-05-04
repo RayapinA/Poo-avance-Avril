@@ -10,6 +10,7 @@ class UserRepository
     private $dataBaseConnection;
     private $id;
 
+    //Dependency Inversion
     public function __construct(DataBaseConnectionInterface $dataBaseConnectionInterface)
     {
         $this->dataBaseConnection = $dataBaseConnectionInterface->connect();
