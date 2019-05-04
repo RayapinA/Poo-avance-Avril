@@ -8,6 +8,8 @@
 
 namespace Form;
 
+use Core\Routing;
+
 class FormLogin
 {
     public function getLoginForm(): array
@@ -15,7 +17,7 @@ class FormLogin
         return [
             'config' => [
                 'method' => 'POST',
-                'action' => '',
+                'action' => Routing::getSlug('Users', 'login'),
                 'class' => '',
                 'id' => '',
                 'submit' => 'Se connecter',

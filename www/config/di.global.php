@@ -5,12 +5,14 @@ use Controllers\UsersController;
 use Manager\UserManager;
 use Repository\UserRepository;
 use Core\DataBaseConnection;
+use Authentication\UserAuthentication;
 
 return [
     UsersController::class => function ($container) {
-        $usermodel = $container[UserManager::class]($container);
+        $userManager = $container[UserManager::class]($container);
+        $userAuthentication = $container[UserAuthentication::class]($container);
 
-        return new UsersController($usermodel);
+        return new UsersController($userManager,$userAuthentication);
     },
     PagesController::class => function ($container) {
         return new controllers\PagesController();
@@ -34,4 +36,9 @@ return [
 
         return new DataBaseConnection($driver, $host, $name, $user, $password);
     },
+    UserAuthentication::class => function ($container){
+        $databaseConnection = $container[DataBaseConnection::class]($container);
+
+        return new UserAuthentication($databaseConnection);
+    }
 ];

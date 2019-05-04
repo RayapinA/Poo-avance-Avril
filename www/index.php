@@ -13,6 +13,7 @@ function myAutoloader($class)
     $formRegister = 'Form/'.$className.'.php';
     $classManager = 'manager/'.$className.'.php';
     $classRepository = 'Repository/'.$className.'.php';
+    $classAuthentication = 'Authentication/'.$className.'.php';
 
     if (file_exists($classPath)) {
         include $classPath;
@@ -24,6 +25,8 @@ function myAutoloader($class)
         include $classManager;
     } elseif (file_exists($classRepository)) {
         include $classRepository;
+    }elseif(file_exists($classAuthentication)){
+        include $classAuthentication;
     }
 }
 ini_set('display_errors', 1);

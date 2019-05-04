@@ -30,7 +30,7 @@ class UserRepository
         $sql = ' SELECT * FROM Users WHERE  '.implode(' AND ', $sqlWhere).';';
         $query = $this->dataBaseConnection->prepare($sql);
 
-        $query->setFetchMode(PDO::FETCH_ASSOC);
+        $query->setFetchMode(\PDO::FETCH_ASSOC);
         $query->execute($where);
 
         if ($query->fetch()) {

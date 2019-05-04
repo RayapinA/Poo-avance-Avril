@@ -2,6 +2,8 @@
 
 namespace Controllers;
 
+use Authentication\UserAuthentication;
+use Core\Routing;
 use Core\View;
 use Core\Validator;
 use Models\Users;
@@ -12,12 +14,14 @@ use Form\FormLogin;
 class UsersController
 {
     private $userManager;
+    private $userAuthentication;
     private $user;
 
-    public function __construct(UserManager $userManager)
+    public function __construct(UserManager $userManager, UserAuthentication $userAuthentication)
     {
         $this->user = new Users();
         $this->userManager = $userManager;
+        $this->userAuthentication = $userAuthentication;
     }
 
     public function defaultAction()
@@ -71,10 +75,9 @@ class UsersController
         if ($_SERVER['REQUEST_METHOD'] == $method && !empty($data)) {
             $validator = new Validator($form, $data);
             $form['errors'] = $validator->errors;
-
             if (empty($errors)) {
                 $token = md5(substr(uniqid().time(), 4, 10).'mxu(4il');
-                // TODO: connexion
+                $this->userAuthentication->Authenticate($data);
             }
         }
 
