@@ -3,7 +3,6 @@
 namespace Controllers;
 
 use Authentication\UserAuthentication;
-use Core\Routing;
 use Core\View;
 use Core\Validator;
 use Models\Users;

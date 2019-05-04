@@ -18,5 +18,4 @@ class UserManager
     {
         $this->userRepository->saveUser($user);
     }
-
 }

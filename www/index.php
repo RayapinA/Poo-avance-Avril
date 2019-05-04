@@ -25,7 +25,7 @@ function myAutoloader($class)
         include $classManager;
     } elseif (file_exists($classRepository)) {
         include $classRepository;
-    }elseif(file_exists($classAuthentication)){
+    } elseif (file_exists($classAuthentication)) {
         include $classAuthentication;
     }
 }

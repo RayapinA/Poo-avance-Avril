@@ -12,7 +12,7 @@ return [
         $userManager = $container[UserManager::class]($container);
         $userAuthentication = $container[UserAuthentication::class]($container);
 
-        return new UsersController($userManager,$userAuthentication);
+        return new UsersController($userManager, $userAuthentication);
     },
     PagesController::class => function ($container) {
         return new controllers\PagesController();
@@ -36,9 +36,9 @@ return [
 
         return new DataBaseConnection($driver, $host, $name, $user, $password);
     },
-    UserAuthentication::class => function ($container){
+    UserAuthentication::class => function ($container) {
         $databaseConnection = $container[DataBaseConnection::class]($container);
 
         return new UserAuthentication($databaseConnection);
-    }
+    },
 ];
