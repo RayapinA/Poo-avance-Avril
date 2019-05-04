@@ -10,9 +10,7 @@ class Validator
 
     public function __construct(array $config, array $data)
     {
-        if (count($data) != count($config['data'])) {
-            die('Tentative : faille XSS');
-        }
+
 
         foreach ($config['data'] as $name => $info) {
             if (!isset($data[$name])) {
@@ -58,13 +56,19 @@ class Validator
         return strlen(trim($string)) <= $length;
     }
 
-    public static function checkEmail(string $string): bool
+    public static function checkEmail(string $string): string
     {
-        return filter_var(trim($string), FILTER_VALIDATE_EMAIL);
+        //if(is_array(filter_var(trim($string), FILTER_VALIDATE_EMAIL))){
+          //  return filter_var(trim($string), FILTER_VALIDATE_EMAIL) ;
+        //}
+        //return 'antoine';die();
+
+        return filter_var(trim($string), FILTER_VALIDATE_EMAIL) ;
     }
 
     public static function checkPassword(string $string): bool
     {
+
         return
                     preg_match('#[a-z]#', $string) &&
                     preg_match('#[A-Z]#', $string) &&

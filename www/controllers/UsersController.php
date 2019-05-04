@@ -5,9 +5,22 @@ namespace Controllers;
 use Core\View;
 use Core\Validator;
 use Models\Users;
+use Manager\userManager;
+use Controllers\UserPersistenceManager;
+use Form\FormRegister;
+use Form\FormLogin;
 
 class UsersController
 {
+    private $userManager;
+    private $user;
+
+    public function __construct(UserManager $userManager)
+    {
+        $this->user = new Users();
+        $this->userManager = $userManager;
+    }
+
     public function defaultAction()
     {
         echo 'users default';
@@ -15,8 +28,8 @@ class UsersController
 
     public function addAction()
     {
-        $user = new Users();
-        $form = $user->getRegisterForm();
+        $objectFormRegister = new FormRegister();
+        $form = $objectFormRegister->getRegisterForm();
 
         $view = new View('addUser', 'front');
         $view->assign('form', $form);
@@ -25,20 +38,24 @@ class UsersController
     public function saveAction()
     {
         $user = new Users();
-        $form = $user->getRegisterForm();
+        $objectFormLogin = new FormLogin();
+        $form = $objectFormLogin->getLoginForm();
+
         $method = strtoupper($form['config']['method']);
         $data = $GLOBALS['_'.$method];
 
         if ($_SERVER['REQUEST_METHOD'] == $method && !empty($data)) {
+
             $validator = new Validator($form, $data);
             $form['errors'] = $validator->errors;
 
             if (empty($errors)) {
-                $user->setFirstname($data['firstname']);
-                $user->setLastname($data['lastname']);
-                $user->setEmail($data['email']);
-                $user->setPwd($data['pwd']);
-                $user->save();
+                $this->user->setFirstname($data['firstname']);
+                $this->user->setLastname($data['lastname']);
+                $this->user->setEmail($data['email']);
+                $this->user->setPwd($data['pwd']);
+
+                $this->userManager->save($this->user);
             }
         }
 
@@ -48,8 +65,8 @@ class UsersController
 
     public function loginAction()
     {
-        $user = new Users();
-        $form = $user->getLoginForm();
+        $objectFormLogin = new FormLogin();
+        $form = $objectFormLogin->getLoginForm();
 
         $method = strtoupper($form['config']['method']);
         $data = $GLOBALS['_'.$method];

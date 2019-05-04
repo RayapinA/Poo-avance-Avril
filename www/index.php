@@ -10,11 +10,20 @@ function myAutoloader($class)
 
     $classPath = 'core/'.$className.'.php'; //var_dump($classPath);echo '<br> 1';
     $classModel = 'models/'.$className.'.php'; // var_dump($classModel);echo '<br>2';
+    $formRegister =  'Form/'.$className.'.php';
+    $classManager = 'manager/'.$className.'.php';
+    $classRepository = 'Repository/'.$className.'.php';
 
     if (file_exists($classPath)) {
         include $classPath;
     } elseif (file_exists($classModel)) {
         include $classModel;
+    }elseif(file_exists($formRegister)){
+        include $formRegister;
+    }elseif(file_exists($classManager)){
+        include $classManager;
+    }elseif(file_exists($classRepository)){
+        include $classRepository;
     }
 }
 ini_set('display_errors', 1);
