@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Models;
 use models\EmailValueObject;
+use models\PasswordValueObject;
+use models\IdentityValueObject;
 use Core\BaseSQL;
 
 class Users
@@ -15,10 +17,13 @@ class Users
     public $pwd;
     public $role = 1;
     public $status = 0;
+    public $identity;
 
-    public function __construct(EmailValueObject $email)
+    public function __construct(EmailValueObject $email,PasswordValueObject $password,IdentityValueObject $identity)
     {
-    $this->email = $email;
+        $this->email = $email;
+        $this->pwd = $password;
+        $this->identity = $identity;
     }
 
     public function setFirstname(String $firstname)
@@ -44,5 +49,14 @@ class Users
     public function setStatus(String $status)
     {
         $this->status = $status;
+    }
+    public function changeEmail( EmailValueObject $email)
+    {
+        $this->email = $email;
+    }
+
+    public function changePassword(PasswordValueObject $password)
+    {
+        $this->pwd = $password;
     }
 }

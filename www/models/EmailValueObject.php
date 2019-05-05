@@ -31,10 +31,16 @@ final class EmailValueObject
         return sprintf('%s@%s', $this->mailbox, $this->host);
     }
 
-    public function changeMailbox($newMailbox)
+    public function changeMailbox(EmailValueObject $newMail)
     {
-        $copy = clone $this;
-        $copy->mailbox = $newMailbox;
-        return $copy;
+        //$copy = clone $this;
+        //$copy->mailbox = $newMail;
+
+        $arrayEmail = explode('@', $newMail);
+
+        $this->mailbox = $arrayEmail[0];
+        $this->host = $arrayEmail[1];
+
+        return $this->mailbox.'@'.$this->host;
     }
 }

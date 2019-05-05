@@ -10,6 +10,8 @@ use Manager\userManager;
 use Form\FormRegister;
 use Form\FormLogin;
 use Models\EmailValueObject;
+use Models\PasswordValueObject;
+use Models\IdentityValueObject;
 
 class UsersController
 {
@@ -51,11 +53,8 @@ class UsersController
             $form['errors'] = $validator->errors;
 
             if (empty($errors)) {
-                $user = new Users(new EmailValueObject($data['email']));
-                $user->setFirstname($data['firstname']);
-                $user->setLastname($data['lastname']);
-                $user->setPwd($data['pwd']);
-
+                //Maybe i should implement a factory for User
+                $user = new Users(new EmailValueObject($data['email']), new PasswordValueObject($data['pwd']), new IdentityValueObject($data['firstname'],$data['lastname']));
                 $this->userManager->save($user);
             }
         }

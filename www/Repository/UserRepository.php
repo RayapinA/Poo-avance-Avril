@@ -44,15 +44,34 @@ class UserRepository
     public function saveUser(Users $user)
     {
         $dataObject = get_object_vars($user);
+
         if (is_null($dataObject['id'])) {
+
+            $firstName = $dataObject['identity']->firstName();
+            $lastName = $dataObject['identity']->lastName();
+            unset($dataObject['identity']);
+
             $sql = 'INSERT INTO Users ( '.
                 implode(',', array_keys($dataObject)).') VALUES ( :'.
                 implode(',:', array_keys($dataObject)).')';
 
             $query = $this->dataBaseConnection->prepare($sql);
-            $query->execute($dataObject);
+
+            $password = $dataObject['pwd']->Password();
+            $email = $dataObject['email']->__toString();
+
+            $query->bindParam(':id', $dataObject['id']);
+            $query->bindParam(':pwd', $password);
+            $query->bindParam(':email', $email);
+            $query->bindParam(':firstname',$firstName );
+            $query->bindParam(':lastname',$lastName );
+            $query->bindParam(':role',$dataObject['role'] );
+            $query->bindParam(':status',$dataObject['status'] );
+
+
+            $query->execute();
         } else {
-            $this->UpdateUser($dataObject);
+            $this->UpdateUser($dataObject); // Do Same !
         }
     }
 
