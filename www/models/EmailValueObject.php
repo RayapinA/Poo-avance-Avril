@@ -4,11 +4,10 @@
  * User: AR_Gwada
  * Date: 2019-05-04
  * Time: 23:17
- * source : https://blog.sznapka.pl/immutable-value-objects-in-php/
+ * source : https://blog.sznapka.pl/immutable-value-objects-in-php/.
  */
 
 namespace Models;
-
 
 final class EmailValueObject
 {

@@ -46,7 +46,6 @@ class UserRepository
         $dataObject = get_object_vars($user);
 
         if (is_null($dataObject['id'])) {
-
             $firstName = $dataObject['identity']->firstName();
             $lastName = $dataObject['identity']->lastName();
             unset($dataObject['identity']);
@@ -63,11 +62,10 @@ class UserRepository
             $query->bindParam(':id', $dataObject['id']);
             $query->bindParam(':pwd', $password);
             $query->bindParam(':email', $email);
-            $query->bindParam(':firstname',$firstName );
-            $query->bindParam(':lastname',$lastName );
-            $query->bindParam(':role',$dataObject['role'] );
-            $query->bindParam(':status',$dataObject['status'] );
-
+            $query->bindParam(':firstname', $firstName);
+            $query->bindParam(':lastname', $lastName);
+            $query->bindParam(':role', $dataObject['role']);
+            $query->bindParam(':status', $dataObject['status']);
 
             $query->execute();
         } else {

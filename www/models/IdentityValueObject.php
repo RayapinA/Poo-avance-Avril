@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: AR_Gwada
  * Date: 2019-05-05
- * Time: 15:34
+ * Time: 15:34.
  */
 
 namespace Models;
-
 
 final class IdentityValueObject
 {
@@ -19,12 +18,12 @@ final class IdentityValueObject
 
     public function __construct(string $firstName, string $lastName)
     {
-        if(empty($firstName) || empty($lastName)){
-            throw new \InvalidArgumentException(' Identity incomplete' );
+        if (empty($firstName) || empty($lastName)) {
+            throw new \InvalidArgumentException(' Identity incomplete');
         }
 
-        if(!$this->checkingLength($firstName,$lastName)){
-            throw new \InvalidArgumentException(' Identity doesn\t not respect the pattern' );
+        if (!$this->checkingLength($firstName, $lastName)) {
+            throw new \InvalidArgumentException(' Identity doesn\t not respect the pattern');
         }
 
         $this->firstName = $firstName;
@@ -36,7 +35,7 @@ final class IdentityValueObject
         $checkingOk = false;
         $parameters = func_get_args();
 
-        foreach($parameters as $value){
+        foreach ($parameters as $value) {
             $checkingOk = $this->minlength($value);
         }
 
@@ -45,19 +44,22 @@ final class IdentityValueObject
 
     public function minLength(string $value): bool
     {
-        if(strlen($value) < self::MIN_LENGTH_VALUE){
+        if (strlen($value) < self::MIN_LENGTH_VALUE) {
             return false;
         }
+
         return $this->maxLength($value);
     }
 
     public function maxLength(string $value): bool
     {
-        if(strlen($value) > self::MAX_LENGTH_VALUE){
+        if (strlen($value) > self::MAX_LENGTH_VALUE) {
             return false;
         }
+
         return true;
     }
+
     public function firstName(): string
     {
         return $this->firstName;
@@ -67,5 +69,4 @@ final class IdentityValueObject
     {
         return $this->lastName;
     }
-
 }

@@ -20,7 +20,6 @@ class UsersController
 
     public function __construct(UserManager $userManager, UserAuthentication $userAuthentication)
     {
-
         $this->userManager = $userManager;
         $this->userAuthentication = $userAuthentication;
     }
@@ -41,7 +40,6 @@ class UsersController
 
     public function saveAction()
     {
-
         $objectFormLogin = new FormLogin();
         $form = $objectFormLogin->getLoginForm();
 
@@ -54,7 +52,7 @@ class UsersController
 
             if (empty($errors)) {
                 //Maybe i should implement a factory for User
-                $user = new Users(new EmailValueObject($data['email']), new PasswordValueObject($data['pwd']), new IdentityValueObject($data['firstname'],$data['lastname']));
+                $user = new Users(new EmailValueObject($data['email']), new PasswordValueObject($data['pwd']), new IdentityValueObject($data['firstname'], $data['lastname']));
                 $this->userManager->save($user);
             }
         }

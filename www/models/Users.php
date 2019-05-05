@@ -3,10 +3,10 @@
 declare(strict_types=1);
 
 namespace Models;
+
 use models\EmailValueObject;
 use models\PasswordValueObject;
 use models\IdentityValueObject;
-use Core\BaseSQL;
 
 class Users
 {
@@ -19,7 +19,7 @@ class Users
     public $status = 0;
     public $identity;
 
-    public function __construct(EmailValueObject $email,PasswordValueObject $password,IdentityValueObject $identity)
+    public function __construct(EmailValueObject $email, PasswordValueObject $password, IdentityValueObject $identity)
     {
         $this->email = $email;
         $this->pwd = $password;
@@ -50,7 +50,8 @@ class Users
     {
         $this->status = $status;
     }
-    public function changeEmail( EmailValueObject $email)
+
+    public function changeEmail(EmailValueObject $email)
     {
         $this->email = $email;
     }
