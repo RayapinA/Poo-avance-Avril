@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Controllers;
 
 use Authentication\UserAuthentication;
@@ -24,12 +26,12 @@ class UsersController
         $this->userAuthentication = $userAuthentication;
     }
 
-    public function defaultAction()
+    public function defaultAction(): void
     {
         echo 'users default';
     }
 
-    public function addAction()
+    public function addAction(): void
     {
         $objectFormRegister = new FormRegister();
         $form = $objectFormRegister->getRegisterForm();
@@ -38,7 +40,7 @@ class UsersController
         $view->assign('form', $form);
     }
 
-    public function saveAction()
+    public function saveAction(): void
     {
         $objectFormLogin = new FormLogin();
         $form = $objectFormLogin->getLoginForm();
@@ -52,7 +54,11 @@ class UsersController
 
             if (empty($errors)) {
                 //Maybe i should implement a factory for User
-                $user = new Users(new EmailValueObject($data['email']), new PasswordValueObject($data['pwd']), new IdentityValueObject($data['firstname'], $data['lastname']));
+                $identity = new IdentityValueObject($data['firstname'], $data['lastname']);
+                $password = new PasswordValueObject($data['pwd']);
+                $email = new EmailValueObject($data['email']);
+
+                $user = new Users($email, $password, $identity);
                 $this->userManager->save($user);
             }
         }
@@ -61,7 +67,7 @@ class UsersController
         $view->assign('form', $form);
     }
 
-    public function loginAction()
+    public function loginAction(): void
     {
         $objectFormLogin = new FormLogin();
         $form = $objectFormLogin->getLoginForm();
@@ -81,7 +87,7 @@ class UsersController
         $view->assign('form', $form);
     }
 
-    public function forgetPasswordAction()
+    public function forgetPasswordAction(): void
     {
         $view = new View('forgetPasswordUser', 'front');
     }

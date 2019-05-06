@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: AR_Gwada
@@ -22,8 +24,8 @@ final class PasswordValueObject
         $this->password = password_hash($password, PASSWORD_DEFAULT);
     }
 
-    public function Password()
+    public function Password(): string
     {
-        return $this->password;
+        return (string) $this->password;
     }
 }

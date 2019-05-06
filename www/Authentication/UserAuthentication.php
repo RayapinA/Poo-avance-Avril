@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: AR_Gwada
@@ -20,7 +22,7 @@ class UserAuthentication
         $this->dataBaseConnection = $dataBaseConnectionInterface->connect();
     }
 
-    public function Authenticate($data)
+    public function Authenticate($data): void
     {
         $sqlAuthentication = [];
         foreach ($data as $key => $value) {
@@ -36,6 +38,10 @@ class UserAuthentication
         $array = $query->fetchAll();
 
         if (password_verify($data['pwd'], $array[0]['pwd'])) {
+            session_start();
+            $_SESSION['email'] = $data['email'];
+            $_SESSION['id'] = $array[0]['id'];
+
             $v = new View('homepage', 'back');
             $v->assign('pseudo', 'prof');
         }

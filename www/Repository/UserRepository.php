@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Repository;
 
 use Core\DataBaseConnectionInterface;
@@ -24,10 +26,8 @@ class UserRepository
 
     public function getOneBy(array $where): array
     {
-        $sqlWhere = [];
-        foreach ($where as $key => $value) {
-            $sqlWhere[] = $key.'=:'.$key;
-        }
+        $sqlWhere = $this->prepareDataForQuery($where, true);
+
         $sql = ' SELECT * FROM Users WHERE  '.implode(' AND ', $sqlWhere).';';
         $query = $this->dataBaseConnection->prepare($sql);
 
@@ -41,7 +41,7 @@ class UserRepository
         return array();
     }
 
-    public function saveUser(Users $user)
+    public function saveUser(Users $user): void
     {
         $dataObject = get_object_vars($user);
 
@@ -69,20 +69,47 @@ class UserRepository
 
             $query->execute();
         } else {
-            $this->UpdateUser($dataObject); // Do Same !
+            $this->UpdateUser($dataObject);
         }
     }
 
-    public function UpdateUser(array $dataObject)
+    public function UpdateUser(array $dataObject): void
     {
-        $sqlUpdate = [];
-        foreach ($dataObject as $key => $value) {
-            if ('id' != $key) {
-                $sqlUpdate[] = $key.'=:'.$key;
-            }
-        }
+        $firstName = $dataObject['identity']->firstName();
+        $lastName = $dataObject['identity']->lastName();
+        unset($dataObject['identity']);
+
+        $sqlUpdate = $this->prepareDataForQuery($dataObject);
+
         $sql = 'UPDATE Users SET '.implode(',', $sqlUpdate).' WHERE id=:id';
         $query = $this->dataBaseConnection->prepare($sql);
+
+        $password = $dataObject['pwd']->Password();
+        $email = $dataObject['email']->__toString();
+
+        $query->bindParam(':id', $dataObject['id']);
+        $query->bindParam(':pwd', $password);
+        $query->bindParam(':email', $email);
+        $query->bindParam(':firstname', $firstName);
+        $query->bindParam(':lastname', $lastName);
+        $query->bindParam(':role', $dataObject['role']);
+        $query->bindParam(':status', $dataObject['status']);
+
+        //I get a error here ! i check my code it's the same as saveUser for password and it's work
         $query->execute($dataObject);
+    }
+
+    // This break the S of solid ??
+    public function prepareDataForQuery(array $dataObject, bool $withId = false): array
+    {
+        $arrayWithPreparedData = [];
+        foreach ($dataObject as $key => $value) {
+            if ('id' == $key && false == $withId) {
+                continue;
+            }
+            $arrayWithPreparedData[] = $key.'=:'.$key;
+        }
+
+        return $arrayWithPreparedData;
     }
 }

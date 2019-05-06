@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Core;
 
 class View
@@ -48,7 +50,7 @@ class View
     /*
         * @return mixed the filtered data, or <b>FALSE</b> if the filter fails.
     */
-    public function assign(string $key, $value)
+    public function assign(string $key, $value): void
     {
         $this->data[$key] = $value;
     }

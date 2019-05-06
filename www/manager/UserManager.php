@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Manager;
 
 use Repository\UserRepository;
@@ -14,7 +16,7 @@ class UserManager
         $this->userRepository = $userRepository;
     }
 
-    public function save(Users $user)
+    public function save(Users $user): void
     {
         $this->userRepository->saveUser($user);
     }
