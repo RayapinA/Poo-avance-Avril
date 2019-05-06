@@ -7,8 +7,9 @@ namespace Models;
 use models\EmailValueObject;
 use models\PasswordValueObject;
 use models\IdentityValueObject;
+use models\UsersInterface;
 
-class Users
+class Users implements UsersInterface
 {
     public $id = null;
     public $firstname;
