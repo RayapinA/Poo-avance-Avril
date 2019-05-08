@@ -8,6 +8,7 @@ use Authentication\UserAuthentication;
 use Core\View;
 use Core\Validator;
 use Models\Users;
+use Models\UsersAuthentication;
 use Manager\userManager;
 use Form\FormRegister;
 use Form\FormLogin;
@@ -28,7 +29,8 @@ class UsersController
 
     public function defaultAction(): void
     {
-        echo 'users default';
+        session_start();
+        var_dump($_SESSION);
     }
 
     public function addAction(): void
@@ -46,7 +48,7 @@ class UsersController
         $objectFormLogin = new FormLogin();
         $form = $objectFormLogin->getLoginForm();
 
-        $method = strtoupper($form['config']['method']);
+        $method = strtoupper($form['config']['method']); //Same as Register is POST
         $data = $GLOBALS['_'.$method];
 
         if ($_SERVER['REQUEST_METHOD'] == $method && !empty($data)) {
@@ -75,11 +77,17 @@ class UsersController
             $validator = new Validator($form, $data);
             $form['errors'] = $validator->errors;
             if (empty($errors)) {
+                //TODO : DO IT !
                 $token = md5(substr(uniqid().time(), 4, 10).'mxu(4il');
-                $this->userAuthentication->Authenticate($data);
+
+                $email = new EmailValueObject($data['email']);
+                $password = new PasswordValueObject($data['pwd']);
+                $userAuthentication = new UsersAuthentication ($email, $password);
+
+                $this->userAuthentication->Authenticate($userAuthentication);
+
             }
         }
-
         $view = new View('loginUser', 'front');
         $view->assign('form', $form);
     }

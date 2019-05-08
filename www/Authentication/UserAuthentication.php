@@ -12,35 +12,33 @@ namespace Authentication;
 
 use Core\DataBaseConnectionInterface;
 use Core\View;
+use Models\UsersAuthentication;
+use Repository\UserRepository;
 
 class UserAuthentication
 {
     private $dataBaseConnection;
+    private $userRepository;
 
-    public function __construct(DataBaseConnectionInterface $dataBaseConnectionInterface)
+    public function __construct(UserRepository $userRepository)
     {
-        $this->dataBaseConnection = $dataBaseConnectionInterface->connect();
+        $this->userRepository = $userRepository;
     }
 
-    public function Authenticate($data): void
+    public function Authenticate(UsersAuthentication $usersAuthentication): void
     {
-        $sqlAuthentication = [];
-        foreach ($data as $key => $value) {
-            $sqlAuthentication[] = $key.'=:'.$key;
-        }
 
-        $sql = ' SELECT * FROM Users WHERE email = :email ';
+        $arrayAuthenticationUser = array ();
+        $arrayAuthenticationUser['email'] = $usersAuthentication->getEmail();
 
-        $query = $this->dataBaseConnection->prepare($sql);
-        $query->setFetchMode(\PDO::FETCH_ASSOC);
-        $query->bindParam(':email', $data['email'], \PDO::PARAM_STR);
-        $query->execute();
-        $array = $query->fetchAll();
+        $arrayDataBaseInfoUser = $this->userRepository->getOneBy($arrayAuthenticationUser);
 
-        if (password_verify($data['pwd'], $array[0]['pwd'])) {
+        $arrayAuthenticationUser['password'] = $usersAuthentication->getPassword();
+
+        if (isset($arrayDataBaseInfoUser['pwd']) && password_verify($arrayAuthenticationUser['password'], $arrayDataBaseInfoUser['pwd'])) {
             session_start();
-            $_SESSION['email'] = $data['email'];
-            $_SESSION['id'] = $array[0]['id'];
+            $_SESSION['email'] = $arrayDataBaseInfoUser['email'];
+            $_SESSION['id'] = $arrayDataBaseInfoUser['id'];
 
             $v = new View('homepage', 'back');
             $v->assign('pseudo', 'prof');

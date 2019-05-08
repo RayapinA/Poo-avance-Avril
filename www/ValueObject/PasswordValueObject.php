@@ -14,22 +14,33 @@ final class PasswordValueObject
 {
     private $password;
 
-    public function __construct(string $password, string $confirmPassword)
+    public function __construct(string $password, string $confirmPassword = null)
     {
         if (!preg_match('#[a-z]#', $password) || !preg_match('#[A-Z]#', $password)
         || !preg_match('#[0-9]#', $password)) {
             throw new \InvalidArgumentException('The password doesn\'t respect the pattern');
         }
 
-        if (null == $confirmPassword || $confirmPassword != $password) {
+        if ($confirmPassword != null && $confirmPassword != $password) {
             throw new \InvalidArgumentException('The password doesn\'t respect the pattern');
         }
 
-        $this->password = password_hash($password, PASSWORD_DEFAULT);
+        //Need a Review or Need Help on this one
+        if( "" != $confirmPassword){
+            $this->generatePassword($password);
+        } else {
+            $this->password = $password;
+        }
+
     }
 
     public function Password(): string
     {
         return (string) $this->password;
+    }
+
+    private function generatePassword(string $password)
+    {
+        $this->password = password_hash($password, PASSWORD_DEFAULT);
     }
 }

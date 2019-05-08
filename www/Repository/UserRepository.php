@@ -34,8 +34,10 @@ class UserRepository
         $query->setFetchMode(\PDO::FETCH_ASSOC);
         $query->execute($where);
 
-        if ($query->fetch()) {
-            return $query->fetch();
+        $userInfoDataBase = $query->fetch();
+
+        if (is_array($userInfoDataBase)) {
+            return $userInfoDataBase;
         }
 
         return array();
@@ -100,7 +102,7 @@ class UserRepository
     }
 
     // This break the S of solid ??
-    public function prepareDataForQuery(array $dataObject, bool $withId = false): array
+    private function prepareDataForQuery(array $dataObject, bool $withId = false): array
     {
         $arrayWithPreparedData = [];
         foreach ($dataObject as $key => $value) {

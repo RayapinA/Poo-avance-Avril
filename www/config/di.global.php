@@ -37,8 +37,8 @@ return [
         return new DataBaseConnection($driver, $host, $name, $user, $password);
     },
     UserAuthentication::class => function ($container) {
-        $databaseConnection = $container[DataBaseConnection::class]($container);
+        $userRepository = $container[UserRepository::class]($container);
 
-        return new UserAuthentication($databaseConnection);
+        return new UserAuthentication($userRepository);
     },
 ];
