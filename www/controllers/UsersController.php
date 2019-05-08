@@ -82,10 +82,9 @@ class UsersController
 
                 $email = new EmailValueObject($data['email']);
                 $password = new PasswordValueObject($data['pwd']);
-                $userAuthentication = new UsersAuthentication ($email, $password);
+                $userAuthentication = new UsersAuthentication($email, $password);
 
                 $this->userAuthentication->Authenticate($userAuthentication);
-
             }
         }
         $view = new View('loginUser', 'front');

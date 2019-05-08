@@ -21,17 +21,16 @@ final class PasswordValueObject
             throw new \InvalidArgumentException('The password doesn\'t respect the pattern');
         }
 
-        if ($confirmPassword != null && $confirmPassword != $password) {
+        if (null != $confirmPassword && $confirmPassword != $password) {
             throw new \InvalidArgumentException('The password doesn\'t respect the pattern');
         }
 
         //Need a Review or Need Help on this one
-        if( "" != $confirmPassword){
+        if ('' != $confirmPassword) {
             $this->generatePassword($password);
         } else {
             $this->password = $password;
         }
-
     }
 
     public function Password(): string

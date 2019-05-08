@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace Authentication;
 
-use Core\DataBaseConnectionInterface;
 use Core\View;
 use Models\UsersAuthentication;
 use Repository\UserRepository;
@@ -27,15 +26,15 @@ class UserAuthentication
 
     public function Authenticate(UsersAuthentication $usersAuthentication): void
     {
-
-        $arrayAuthenticationUser = array ();
+        $arrayAuthenticationUser = array();
         $arrayAuthenticationUser['email'] = $usersAuthentication->getEmail();
 
         $arrayDataBaseInfoUser = $this->userRepository->getOneBy($arrayAuthenticationUser);
 
         $arrayAuthenticationUser['password'] = $usersAuthentication->getPassword();
 
-        if (isset($arrayDataBaseInfoUser['pwd']) && password_verify($arrayAuthenticationUser['password'], $arrayDataBaseInfoUser['pwd'])) {
+        if (isset($arrayDataBaseInfoUser['pwd']) &&
+            password_verify($arrayAuthenticationUser['password'], $arrayDataBaseInfoUser['pwd'])) {
             session_start();
             $_SESSION['email'] = $arrayDataBaseInfoUser['email'];
             $_SESSION['id'] = $arrayDataBaseInfoUser['id'];
