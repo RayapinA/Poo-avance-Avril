@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Models;
 
-use models\EmailValueObject;
-use models\PasswordValueObject;
-use models\IdentityValueObject;
+use ValueObject\EmailValueObject;
+use ValueObject\PasswordValueObject;
+use ValueObject\IdentityValueObject;
 use models\UsersInterface;
 
 class Users implements UsersInterface
@@ -36,4 +36,10 @@ class Users implements UsersInterface
     {
         $this->pwd = $password;
     }
+
+    public function changeIdentity(IdentityValueObject $identity): void
+    {
+        $this->identity = $identity;
+    }
+
 }

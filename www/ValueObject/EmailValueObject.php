@@ -9,7 +9,7 @@ declare(strict_types=1);
  * source : https://blog.sznapka.pl/immutable-value-objects-in-php/.
  */
 
-namespace Models;
+namespace ValueObject;
 
 final class EmailValueObject
 {

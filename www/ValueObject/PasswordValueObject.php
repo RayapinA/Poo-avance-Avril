@@ -8,7 +8,7 @@ declare(strict_types=1);
  * Time: 23:49.
  */
 
-namespace Models;
+namespace ValueObject;
 
 final class PasswordValueObject
 {

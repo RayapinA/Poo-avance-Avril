@@ -9,8 +9,13 @@
 namespace Models;
 
 
+use ValueObject\IdentityValueObject;
+use ValueObject\PasswordValueObject;
+use ValueObject\EmailValueObject;
+
 interface UsersInterface
 {
     public function changeEmail(EmailValueObject $email);
     public function changePassword(PasswordValueObject $password);
+    public function changeIdentity(IdentityValueObject $identity);
 }

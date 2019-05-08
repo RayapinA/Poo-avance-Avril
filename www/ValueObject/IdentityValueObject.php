@@ -8,7 +8,7 @@ declare(strict_types=1);
  * Time: 15:34.
  */
 
-namespace Models;
+namespace ValueObject;
 
 final class IdentityValueObject
 {
@@ -31,6 +31,7 @@ final class IdentityValueObject
         $this->firstName = $firstName;
         $this->lastName = $lastName;
     }
+
 
     public function checkingLength(string $firstName, string $lastName): bool
     {

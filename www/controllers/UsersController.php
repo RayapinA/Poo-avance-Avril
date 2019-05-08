@@ -11,9 +11,9 @@ use Models\Users;
 use Manager\userManager;
 use Form\FormRegister;
 use Form\FormLogin;
-use Models\EmailValueObject;
-use Models\PasswordValueObject;
-use Models\IdentityValueObject;
+use ValueObject\EmailValueObject;
+use ValueObject\PasswordValueObject;
+use ValueObject\IdentityValueObject;
 
 class UsersController
 {
@@ -55,8 +55,8 @@ class UsersController
             if (empty($errors)) {
                 //Maybe i should implement a factory for User
                 $identity = new IdentityValueObject($data['firstname'], $data['lastname']);
-                $password = new PasswordValueObject($data['pwd']);
                 $email = new EmailValueObject($data['email']);
+                $password = new PasswordValueObject($data['pwd']);
 
                 $user = new Users($email, $password, $identity);
                 $this->userManager->save($user);

@@ -8,25 +8,19 @@ function myAutoloader($class)
 
     $className = substr($class, strpos($class, '\\') + 1); //var_dump($className);echo '<br>';
 
-    $classPath = 'core/'.$className.'.php'; //var_dump($classPath);echo '<br> 1';
-    $classModel = 'models/'.$className.'.php'; // var_dump($classModel);echo '<br>2';
-    $formRegister = 'Form/'.$className.'.php';
-    $classManager = 'manager/'.$className.'.php';
-    $classRepository = 'Repository/'.$className.'.php';
-    $classAuthentication = 'Authentication/'.$className.'.php';
-
-    if (file_exists($classPath)) {
-        include $classPath;
-    } elseif (file_exists($classModel)) {
-        include $classModel;
-    } elseif (file_exists($formRegister)) {
-        include $formRegister;
-    } elseif (file_exists($classManager)) {
-        include $classManager;
-    } elseif (file_exists($classRepository)) {
-        include $classRepository;
-    } elseif (file_exists($classAuthentication)) {
-        include $classAuthentication;
+    $ArrayOfClass = array(
+        'core/'.$className.'.php',
+        'models/'.$className.'.php',
+        'Form/'.$className.'.php',
+        'manager/'.$className.'.php',
+        'Repository/'.$className.'.php',
+        'Authentication/'.$className.'.php',
+        'ValueObject/'.$className.'.php'
+    );
+    foreach ($ArrayOfClass as $classPath){
+        if(file_exists($classPath)){
+            include $classPath;
+        }
     }
 }
 ini_set('display_errors', 1);
