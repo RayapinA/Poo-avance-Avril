@@ -42,6 +42,7 @@ class UsersController
 
     public function saveAction(): void
     {
+        //For redirection after save
         $objectFormLogin = new FormLogin();
         $form = $objectFormLogin->getLoginForm();
 
@@ -49,18 +50,14 @@ class UsersController
         $data = $GLOBALS['_'.$method];
 
         if ($_SERVER['REQUEST_METHOD'] == $method && !empty($data)) {
-            $validator = new Validator($form, $data);
-            $form['errors'] = $validator->errors;
+            //Maybe i should implement a factory for User
+            $identity = new IdentityValueObject($data['firstname'], $data['lastname']);
+            $email = new EmailValueObject($data['email']);
+            $password = new PasswordValueObject($data['pwd'], $data['pwdConfirm']);
 
-            if (empty($errors)) {
-                //Maybe i should implement a factory for User
-                $identity = new IdentityValueObject($data['firstname'], $data['lastname']);
-                $email = new EmailValueObject($data['email']);
-                $password = new PasswordValueObject($data['pwd']);
-
-                $user = new Users($email, $password, $identity);
-                $this->userManager->save($user);
-            }
+            //TODO : gestion des exceptions
+            $user = new Users($email, $password, $identity);
+            $this->userManager->save($user);
         }
 
         $view = new View('addUser', 'front');

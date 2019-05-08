@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 require 'conf.inc.php';
+use Core\Routing;
 
-function myAutoloader($class)
+function myAutoloader($class): void
 {
-    //var_dump(substr($class, strpos($class,'\\') + 1  ));echo '<br>';
-
-    $className = substr($class, strpos($class, '\\') + 1); //var_dump($className);echo '<br>';
+    $className = substr($class, strpos($class, '\\') + 1);
 
     $ArrayOfClass = array(
         'core/'.$className.'.php',
@@ -15,46 +16,48 @@ function myAutoloader($class)
         'manager/'.$className.'.php',
         'Repository/'.$className.'.php',
         'Authentication/'.$className.'.php',
-        'ValueObject/'.$className.'.php'
+        'ValueObject/'.$className.'.php',
     );
-    foreach ($ArrayOfClass as $classPath){
-        if(file_exists($classPath)){
+    foreach ($ArrayOfClass as $classPath) {
+        if (file_exists($classPath)) {
             include $classPath;
         }
     }
 }
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
+
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
-// La fonction myAutoloader est lancé sur la classe appelée n'est pas trouvée
+//The fonction myAutoloader is running on the class called not found
 spl_autoload_register('myAutoloader');
 
-// Récupération des paramètres dans l'url - Routing
-$slug = explode('?', $_SERVER['REQUEST_URI'])[0]; //var_dump($slug);echo '<br>';
-$routes = \Core\Routing::getRoute($slug);
-extract($routes);
+//Getting the parameters in the url - Routing
+$slug = explode('?', $_SERVER['REQUEST_URI'])[0];
+$routes = Routing::getRoute($slug);
+$controllerPath = $routes['controllerPath'];
+$controller = $routes['controller'];
+$action = $routes['action'];
 
 $container = [];
 $container['config'] = require 'config/global.php';
 $container += require 'config/di.global.php';
 
-// Vérifie l'existence du fichier et de la classe pour charger le controlleur
-if (file_exists($cPath)) {
-    include $cPath;
-    if (class_exists('Controllers\\'.$c)) {
-        //instancier dynamiquement le controller
-        $cObject = $container['Controllers\\'.$c]($container);
-        //vérifier que la méthode (l'action) existe
-        if (method_exists($cObject, $a)) {
-            //appel dynamique de la méthode
-            $cObject->$a();
+//Check the existence of the file and the class to load the controller
+if (file_exists($controllerPath)) {
+    include $controllerPath;
+    if (class_exists('Controllers\\'.$controller)) {
+        //instantiate dynamically the controller
+        $controllerObject = $container['Controllers\\'.$controller]($container);
+        if (method_exists($controllerObject, $action)) {
+            //Call dynamically method
+            $controllerObject->$action();
         } else {
-            die('La methode '.$a." n'existe pas");
+            die('La methode '.$action." n'existe pas");
         }
     } else {
-        die('La class controller controller'.$c." n'existe pas");
+        die('La class controller controller '.$controller." n'existe pas");
     }
 } else {
-    die('Le fichier controller '.$c." n'existe pas");
+    die('Le fichier controller '.$controllerPath." n'existe pas");
 }

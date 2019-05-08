@@ -14,10 +14,14 @@ final class PasswordValueObject
 {
     private $password;
 
-    public function __construct(string $password)
+    public function __construct(string $password, string $confirmPassword)
     {
-        if (!preg_match('#[a-z]#', $password) && !preg_match('#[A-Z]#', $password)
-        && !preg_match('#[0-9]#', $password)) {
+        if (!preg_match('#[a-z]#', $password) || !preg_match('#[A-Z]#', $password)
+        || !preg_match('#[0-9]#', $password)) {
+            throw new \InvalidArgumentException('The password doesn\'t respect the pattern');
+        }
+
+        if (null == $confirmPassword || $confirmPassword != $password) {
             throw new \InvalidArgumentException('The password doesn\'t respect the pattern');
         }
 

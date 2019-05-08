@@ -60,7 +60,6 @@ class Validator
         //  return filter_var(trim($string), FILTER_VALIDATE_EMAIL) ;
         //}
         //return 'antoine';die();
-
         return filter_var(trim($string), FILTER_VALIDATE_EMAIL);
     }
 

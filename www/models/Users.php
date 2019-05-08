@@ -41,5 +41,4 @@ class Users implements UsersInterface
     {
         $this->identity = $identity;
     }
-
 }

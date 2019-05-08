@@ -15,7 +15,7 @@ class Routing
         $routes = yaml_parse_file(self::$routeFile);
 
         if (!isset($routes[$slug])) {
-            return ['c' => null, 'a' => null, 'cPath' => null];
+            return ['controller' => '', 'action' => '', 'controllerPath' => ''];
         }
 
         if (empty($routes[$slug]['controller']) || empty($routes[$slug]['action'])) {
@@ -26,7 +26,7 @@ class Routing
         $action = $routes[$slug]['action'].'Action';
         $controllerPath = 'controllers/'.$controller.'.php';
 
-        return ['c' => $controller, 'a' => $action, 'cPath' => $controllerPath];
+        return ['controller' => $controller, 'action' => $action, 'controllerPath' => $controllerPath];
     }
 
     public static function getSlug(string $controller, string $action): string

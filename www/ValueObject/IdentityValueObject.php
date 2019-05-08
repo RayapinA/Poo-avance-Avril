@@ -32,7 +32,6 @@ final class IdentityValueObject
         $this->lastName = $lastName;
     }
 
-
     public function checkingLength(string $firstName, string $lastName): bool
     {
         $checkingOk = false;
