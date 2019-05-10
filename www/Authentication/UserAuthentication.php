@@ -10,13 +10,11 @@ declare(strict_types=1);
 
 namespace Authentication;
 
-use Core\View;
 use Models\UsersAuthentication;
 use Repository\UserRepository;
 
 class UserAuthentication
 {
-    private $dataBaseConnection;
     private $userRepository;
 
     public function __construct(UserRepository $userRepository)
@@ -39,8 +37,8 @@ class UserAuthentication
             $_SESSION['email'] = $arrayDataBaseInfoUser['email'];
             $_SESSION['id'] = $arrayDataBaseInfoUser['id'];
 
-            $v = new View('homepage', 'back');
-            $v->assign('pseudo', 'prof');
+            header('Location: /');
+            die();
         }
     }
 }

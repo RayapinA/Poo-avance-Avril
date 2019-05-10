@@ -26,9 +26,9 @@ final class PasswordValueObject
         }
 
         //Need a Review or Need Help on this one
-        if ('' != $confirmPassword) {
+        if ('' != $confirmPassword) { //Register scenario
             $this->generatePassword($password);
-        } else {
+        } else { //login scenario
             $this->password = $password;
         }
     }

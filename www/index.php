@@ -2,14 +2,13 @@
 
 declare(strict_types=1);
 
-require 'conf.inc.php';
 use Core\Routing;
 
 function myAutoloader($class): void
 {
     $className = substr($class, strpos($class, '\\') + 1);
 
-    $ArrayOfClass = array(
+    $arrayOfClass = array(
         'core/'.$className.'.php',
         'models/'.$className.'.php',
         'Form/'.$className.'.php',
@@ -18,7 +17,7 @@ function myAutoloader($class): void
         'Authentication/'.$className.'.php',
         'ValueObject/'.$className.'.php',
     );
-    foreach ($ArrayOfClass as $classPath) {
+    foreach ($arrayOfClass as $classPath) {
         if (file_exists($classPath)) {
             include $classPath;
         }
@@ -33,7 +32,9 @@ error_reporting(E_ALL);
 spl_autoload_register('myAutoloader');
 
 //Getting the parameters in the url - Routing
-$slug = explode('?', $_SERVER['REQUEST_URI'])[0];
+$urlForRouting = explode('?', $_SERVER['REQUEST_URI']);
+$slug = $urlForRouting[0];
+
 $routes = Routing::getRoute($slug);
 $controllerPath = $routes['controllerPath'];
 $controller = $routes['controller'];

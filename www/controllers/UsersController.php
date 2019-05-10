@@ -6,7 +6,7 @@ namespace Controllers;
 
 use Authentication\UserAuthentication;
 use Core\View;
-use Core\Validator;
+use Form\FormForgetPassword;
 use Models\Users;
 use Models\UsersAuthentication;
 use Manager\userManager;
@@ -74,18 +74,13 @@ class UsersController
         $method = strtoupper($form['config']['method']);
         $data = $GLOBALS['_'.$method];
         if ($_SERVER['REQUEST_METHOD'] == $method && !empty($data)) {
-            $validator = new Validator($form, $data);
-            $form['errors'] = $validator->errors;
-            if (empty($errors)) {
-                //TODO : DO IT !
-                $token = md5(substr(uniqid().time(), 4, 10).'mxu(4il');
+            //$token = md5(substr(uniqid().time(), 4, 10).'mxu(4il');
 
-                $email = new EmailValueObject($data['email']);
-                $password = new PasswordValueObject($data['pwd']);
-                $userAuthentication = new UsersAuthentication($email, $password);
+            $email = new EmailValueObject($data['email']);
+            $password = new PasswordValueObject($data['pwd']);
+            $userAuthentication = new UsersAuthentication($email, $password);
 
-                $this->userAuthentication->Authenticate($userAuthentication);
-            }
+            $this->userAuthentication->Authenticate($userAuthentication);
         }
         $view = new View('loginUser', 'front');
         $view->assign('form', $form);
@@ -93,6 +88,18 @@ class UsersController
 
     public function forgetPasswordAction(): void
     {
+        $objectFormLogin = new FormForgetPassword();
+        $form = $objectFormLogin->getForgetPasswordForm();
+
+        $method = strtoupper($form['config']['method']);
+        $data = $GLOBALS['_'.$method];
+        if ($_SERVER['REQUEST_METHOD'] == $method && !empty($data)) {
+            $email = new EmailValueObject($data['email']);
+            //TODO gerer l'exception et faire traitement envoie de mail
+            header('Location: /');
+            die();
+        }
         $view = new View('forgetPasswordUser', 'front');
+        $view->assign('form', $form);
     }
 }
