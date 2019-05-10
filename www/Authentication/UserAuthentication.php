@@ -22,7 +22,7 @@ class UserAuthentication
         $this->userRepository = $userRepository;
     }
 
-    public function Authenticate(UsersAuthentication $usersAuthentication): void
+    public function authenticate(UsersAuthentication $usersAuthentication): void
     {
         $arrayAuthenticationUser = array();
         $arrayAuthenticationUser['email'] = $usersAuthentication->getEmail();

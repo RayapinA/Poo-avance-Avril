@@ -33,7 +33,7 @@ final class PasswordValueObject
         }
     }
 
-    public function Password(): string
+    public function password(): string
     {
         return (string) $this->password;
     }

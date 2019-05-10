@@ -80,7 +80,7 @@ class UsersController
             $password = new PasswordValueObject($data['pwd']);
             $userAuthentication = new UsersAuthentication($email, $password);
 
-            $this->userAuthentication->Authenticate($userAuthentication);
+            $this->userAuthentication->authenticate($userAuthentication);
         }
         $view = new View('loginUser', 'front');
         $view->assign('form', $form);

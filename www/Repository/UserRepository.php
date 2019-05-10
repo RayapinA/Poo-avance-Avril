@@ -58,7 +58,7 @@ class UserRepository
 
             $query = $this->dataBaseConnection->prepare($sql);
 
-            $password = $dataObject['pwd']->Password();
+            $password = $dataObject['pwd']->password();
             $email = $dataObject['email']->__toString();
 
             $query->bindParam(':id', $dataObject['id']);
@@ -71,11 +71,11 @@ class UserRepository
 
             $query->execute();
         } else {
-            $this->UpdateUser($dataObject);
+            $this->updateUser($dataObject);
         }
     }
 
-    public function UpdateUser(array $dataObject): void
+    public function updateUser(array $dataObject): void
     {
         $firstName = $dataObject['identity']->firstName();
         $lastName = $dataObject['identity']->lastName();
@@ -86,7 +86,7 @@ class UserRepository
         $sql = 'UPDATE Users SET '.implode(',', $sqlUpdate).' WHERE id=:id';
         $query = $this->dataBaseConnection->prepare($sql);
 
-        $password = $dataObject['pwd']->Password();
+        $password = $dataObject['pwd']->password();
         $email = $dataObject['email']->__toString();
 
         $query->bindParam(':id', $dataObject['id']);
@@ -101,7 +101,7 @@ class UserRepository
         $query->execute($dataObject);
     }
 
-    // This break the S of solid ??
+    // This break the S of solid  if i do that here??
     private function prepareDataForQuery(array $dataObject, bool $withId = false): array
     {
         $arrayWithPreparedData = [];
