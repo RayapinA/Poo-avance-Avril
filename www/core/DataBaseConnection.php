@@ -17,7 +17,7 @@ class DataBaseConnection implements DataBaseConnectionInterface
     private $pdo;
     private $table;
 
-    public function __construct($driver, $host, $name, $user, $password)
+    public function __construct(string $driver, string $host, string $name, string $user, string $password)
     {
         try {
             $this->pdo = new PDO($driver.':host='.$host.';dbname='.$name, $user, $password);
